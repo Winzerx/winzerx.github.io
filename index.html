@@ -3,304 +3,624 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Winzerx | Minecraft Developer</title>
+    <title>Winzerx | Bio 2025</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --mc-bg: #111111;
-            --mc-panel: #232323;
-            --mc-border-light: #4f4f4f;
-            --mc-border-dark: #0d0d0d;
-            --mc-green: #55ff55;
-            --mc-red: #ff5555;
-            --mc-gold: #ffaa00;
-            --mc-gray: #aaaaaa;
-        }
-        body {
-            font-family: 'VT323', monospace;
-            background-color: var(--mc-bg);
-            color: white;
-            background-image: 
-                linear-gradient(45deg, #1a1a1a 25%, transparent 25%), 
-                linear-gradient(-45deg, #1a1a1a 25%, transparent 25%), 
-                linear-gradient(45deg, transparent 75%, #1a1a1a 75%), 
-                linear-gradient(-45deg, transparent 75%, #1a1a1a 75%);
-            background-size: 20px 20px;
-            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-            overflow-x: hidden;
-        }
-        .pixel-border {
-            box-shadow: 
-                -4px 0 0 0 var(--mc-border-dark),
-                4px 0 0 0 var(--mc-border-dark),
-                0 -4px 0 0 var(--mc-border-dark),
-                0 4px 0 0 var(--mc-border-dark),
-                -4px -4px 0 0 var(--mc-border-dark),
-                4px -4px 0 0 var(--mc-border-dark),
-                4px 4px 0 0 var(--mc-border-dark),
-                -4px 4px 0 0 var(--mc-border-dark),
-                inset 4px 4px 0 0 var(--mc-border-light),
-                inset -4px -4px 0 0 var(--mc-border-dark);
-            background-color: var(--mc-panel);
-        }
-        .mc-btn {
-            position: relative;
-            display: inline-block;
-            padding: 10px 20px;
-            color: white;
-            background-color: #3a3a3a;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 1.25rem;
-            cursor: pointer;
-            transition: transform 0.1s;
-            box-shadow: inset -4px -4px 0px 0px #181818, inset 4px 4px 0px 0px #6d6d6d;
-            border: 4px solid #000;
-        }
-        .mc-btn:active {
-            transform: translateY(4px);
-            box-shadow: inset -2px -2px 0px 0px #181818, inset 2px 2px 0px 0px #6d6d6d;
-        }
-        .mc-btn:hover {
-            background-color: #4a4a4a;
-        }
-        .item-slot {
-            background-color: #8b8b8b;
-            border: 4px solid #373737;
-            border-right-color: #fff;
-            border-bottom-color: #fff;
-            width: 100%;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s;
-            position: relative;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap');
         
-        .item-slot:hover {
-            transform: scale(1.05);
-            background-color: #9b9b9b;
+        :root {
+            --bg-color: #050505;
+            --text-main: #ffffff;
+            --text-secondary: #9ca3af;
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-hover-border: rgba(255, 255, 255, 0.3);
+            --nav-bg: rgba(20, 20, 20, 0.5); 
+            --btn-hover: rgba(255, 255, 255, 0.15);
+            --active-nav: #ffffff;
+            --inactive-nav: #6b7280;
         }
-        .item-inner {
-            width: 100%;
-            height: 100%;
-            background: #2b2b2b;
-            border: 2px solid #000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+
+        .light-mode {
+            --bg-color: #e0e7ff;
+            --text-main: #111827;
+            --text-secondary: #4b5563;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --card-border: rgba(255, 255, 255, 0.8);
+            --card-hover-border: rgba(59, 130, 246, 0.5);
+            --nav-bg: rgba(255, 255, 255, 0.5);
+            --btn-hover: rgba(0, 0, 0, 0.05);
+            --active-nav: #2563eb;
+            --inactive-nav: #9ca3af;
         }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .font-code {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        #app-container {
+            height: 100vh;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 100px;
+        }
+
+        #app-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        #app-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #app-container::-webkit-scrollbar-thumb {
+            background: var(--text-secondary);
+            border-radius: 10px;
+            opacity: 0.5;
+        }
+
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
             100% { transform: translateY(0px); }
         }
-        .floating {
-            animation: float 4s ease-in-out infinite;
+
+        @keyframes pageIn {
+            from { opacity: 0; transform: scale(0.98) translateY(10px); filter: blur(4px); }
+            to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        @keyframes spin-slow {
+            to { transform: rotate(360deg); }
         }
-        .animate-in {
-            opacity: 0;
-            animation: fadeIn 0.8s forwards;
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
         }
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.4s; }
-        .delay-3 { animation-delay: 0.6s; }
-        .glitch-wrapper {
-            display: inline-block;
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--text-secondary) }
+        }
+
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-spin-slow { animation: spin-slow 8s linear infinite; }
+        
+        .page-enter {
+            animation: pageIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            color: var(--text-main);
+            transform-style: preserve-3d;
+        }
+
+        .glass-card:hover {
+            border-color: var(--card-hover-border);
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.2);
+        }
+
+        .glass-nav {
+            background: var(--nav-bg);
+            backdrop-filter: blur(30px) saturate(180%) contrast(110%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%) contrast(110%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+        
+        .light-mode .glass-nav {
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        .nav-item {
+            color: var(--inactive-nav);
             position: relative;
+            transition: all 0.3s ease;
         }
-        .glitch {
-            position: relative;
-            color: white;
-            font-size: 4rem;
-            font-weight: bold;
+
+        .nav-item.active {
+            color: var(--active-nav);
+            transform: translateY(-2px);
         }
-        .tooltip {
-            visibility: hidden;
-            background-color: #100010;
-            color: #fff;
-            text-align: center;
-            border: 2px solid #2a0065;
-            padding: 5px 10px;
+
+        .nav-item.active::after {
+            content: '';
             position: absolute;
-            z-index: 1;
-            bottom: 125%;
+            bottom: -8px;
             left: 50%;
             transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 1rem;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: var(--active-nav);
+        }
+
+        .theme-btn {
+             background: var(--card-bg);
+             border: 1px solid var(--card-border);
+             color: var(--text-main);
+        }
+        .theme-btn:hover {
+            background: var(--btn-hover);
+            border-color: var(--card-hover-border);
+        }
+
+        .typewriter {
+            overflow: hidden;
+            border-right: 2px solid var(--text-secondary);
             white-space: nowrap;
-            box-shadow: 4px 4px 0 #000;
+            margin: 0 auto;
+            animation: 
+                typing 2.5s steps(30, end),
+                blink-caret .75s step-end infinite;
+            display: inline-block;
+            max-width: fit-content;
         }
-        .tooltip::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #2a0065 transparent transparent transparent;
-        }
-        .has-tooltip:hover .tooltip {
-            visibility: visible;
-            opacity: 1;
-        }
-        
-        ::selection {
-            background: #533672;
-            color: #fff;
-        }
-        
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #111;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #555;
-            border: 2px solid #111;
+
+        .tilt-card {
+            transform: perspective(1000px);
+            transform-style: preserve-3d;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8">
-    <div class="max-w-4xl w-full relative z-10">
-        
-        <header class="text-center mb-12 animate-in">
-            <div class="glitch-wrapper mb-4">
-                <h1 class="glitch tracking-widest text-shadow-md">WINZERX</h1>
-            </div>
-            <p class="text-xl sm:text-2xl text-gray-400 font-bold typing-effect">
-                <span style="color: var(--mc-green);">&gt;</span> Developer <span class="text-gray-600">|</span> BukkitAPI <span class="text-gray-600">|</span> Admin
-            </p>
-        </header>
-        <section class="mb-12 animate-in delay-1">
-            <div class="pixel-border p-6 sm:p-8">
-                <h2 class="text-3xl mb-6 text-center border-b-4 border-gray-700 pb-2 inline-block w-full text-gray-300">SKILLS</h2>
-                
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-                    
-                    <div class="item-slot has-tooltip cursor-help">
-                        <div class="item-inner">
-                            <span class="text-2xl font-bold text-purple-400">Bukkit</span>
-                            <span class="text-xs text-gray-400 mt-1">API</span>
-                        </div>
-                        <span class="tooltip text-yellow-400">Mastery: High</span>
-                    </div>
-                    <div class="item-slot has-tooltip cursor-help">
-                        <div class="item-inner">
-                            <span class="text-2xl font-bold text-blue-400">Python</span>
-                        </div>
-                        <span class="tooltip text-yellow-400">Status: Active</span>
-                    </div>
-                    <div class="item-slot has-tooltip cursor-help">
-                        <div class="item-inner">
-                            <span class="text-2xl font-bold text-blue-600">C++</span>
-                        </div>
-                        <span class="tooltip text-blue-300">Status: Learning</span>
-                    </div>
-                    <div class="item-slot has-tooltip cursor-help">
-                        <div class="item-inner opacity-70">
-                            <span class="text-2xl font-bold text-orange-600">Rust</span>
-                        </div>
-                        <span class="tooltip text-gray-400">Status: Planned</span>
-                    </div>
-                    <div class="item-slot has-tooltip cursor-help">
-                        <div class="item-inner opacity-70">
-                            <span class="text-2xl font-bold text-cyan-400">GO</span>
-                        </div>
-                        <span class="tooltip text-gray-400">Status: Planned</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="mb-12 animate-in delay-2">
-            <h2 class="text-3xl mb-6 text-center text-shadow-sm">MY SERVERS</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                
-                <div class="pixel-border p-6 relative floating">
-                    <div class="absolute top-2 right-2 w-4 h-4 bg-green-500 border-2 border-black animate-pulse" title="Online"></div>
-                    <h3 class="text-2xl mb-2 text-purple-400">UniverseSky</h3>
-                    <p class="text-gray-400 mb-4 text-lg">А copy of a popular server FT.</p>
-                    <div class="flex flex-col gap-3">
-                        <div class="bg-black bg-opacity-50 p-2 border-2 border-gray-700 flex justify-between items-center">
-                            <code id="ip-text" class="text-green-400">mc.uiversesky.pro</code>
-                            <button onclick="copyToClipboard('mc.uiversesky.pro', 'btn-copy-ip')" id="btn-copy-ip" class="text-xs bg-gray-700 px-2 py-1 hover:bg-gray-600 transition-colors">COPY</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="pixel-border p-6 relative floating" style="animation-delay: 2s;">
-                    <div class="absolute top-2 right-2 w-4 h-4 bg-yellow-500 border-2 border-black" title="In Development"></div>
-                    <h3 class="text-2xl mb-2 text-blue-400">SpaceSky</h3>
-                    <p class="text-gray-400 mb-4 text-lg">Secret...</p>
-                    <div class="flex flex-col gap-3 mt-auto">
-                        <div class="bg-black bg-opacity-50 p-2 border-2 border-gray-700 text-center">
-                            <span class="text-yellow-500 animate-pulse">IN DEVELOPMENT</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="flex flex-col sm:flex-row justify-center gap-6 animate-in delay-3 mb-16">
-            <a href="https://github.com/Winzerx" target="_blank" rel="noopener noreferrer" class="mc-btn text-center group">
-                GitHub
-                <span class="block text-xs text-gray-400 group-hover:text-white">@Winzerx</span>
-            </a>
+<body class="min-h-screen relative selection:bg-blue-500 selection:text-white">
+
+    <canvas id="snowCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0"></canvas>
+
+    <div class="absolute top-6 right-6 z-50 flex gap-3">
+        <button id="themeToggle" class="theme-btn w-10 h-10 flex items-center justify-center rounded-full font-bold text-sm transition-all cursor-pointer shadow-lg">
+            <i class="fa-solid fa-moon" id="themeIcon"></i>
+        </button>
+        <button id="langToggle" class="theme-btn px-4 py-2 rounded-full font-bold text-sm transition-all cursor-pointer shadow-lg flex items-center gap-2">
+            <i class="fa-solid fa-globe"></i>
+            <span id="langLabel">EN</span>
+        </button>
+    </div>
+
+    <div id="app-container" class="relative z-10 w-full">
+        <div class="max-w-4xl mx-auto px-6 py-12 md:py-20 flex flex-col items-center gap-12 min-h-[90vh] justify-center">
             
-            <button onclick="copyToClipboard('Winzerxer', 'btn-discord')" id="btn-discord" class="mc-btn text-center group">
-                Discord
-                <span class="block text-xs text-gray-400 group-hover:text-white">@Winzerxer</span>
+            <section id="page-home" class="w-full flex flex-col items-center text-center page-enter">
+                <div class="tilt-card mb-8">
+                    <div class="glass-card w-40 h-40 md:w-48 md:h-48 rounded-full flex items-center justify-center text-6xl shadow-2xl animate-float overflow-hidden relative group">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <span class="font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500 relative z-10">W</span>
+                        <div class="absolute -bottom-2 -right-2 bg-white text-black text-xs font-bold px-3 py-1 rounded-full border border-gray-300 shadow-lg z-20">
+                            2025
+                        </div>
+                    </div>
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-200 to-gray-500 pb-2">
+                    Winzerx
+                </h1>
+                
+                <div class="h-8 mb-6">
+                    <p class="text-theme-secondary text-xl font-code typewriter" data-i18n="role">&lt;Coder /&gt;</p>
+                </div>
+
+                <div class="glass-card inline-flex items-center gap-3 px-5 py-2 rounded-full border text-sm text-theme-secondary hover:scale-105 transition-transform cursor-default">
+                    <i class="fa-solid fa-snowflake text-cyan-300 animate-spin-slow"></i>
+                    <span data-i18n="status">Happy Upcoming 2026!</span>
+                </div>
+
+                <div class="mt-12 grid grid-cols-2 gap-4 w-full max-w-md">
+                    <button onclick="navigateTo('projects')" class="glass-card py-3 rounded-xl font-bold hover:bg-white hover:text-black transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-play"></i> <span data-i18n="nav_projects">Projects</span>
+                    </button>
+                    <button onclick="navigateTo('contact')" class="glass-card py-3 rounded-xl font-bold hover:bg-white hover:text-black transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> <span data-i18n="contact_btn">Contact Me</span>
+                    </button>
+                </div>
+            </section>
+
+            <section id="page-skills" class="w-full hidden page-enter">
+                <h2 class="text-3xl font-bold mb-8 flex items-center gap-3 justify-center">
+                    <i class="fa-solid fa-code text-blue-400"></i> <span data-i18n="skills_title">Skills & Stack</span>
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 rounded-2xl tilt-element h-full flex flex-col">
+                        <div class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center mb-4 text-yellow-400 text-xl">
+                            <i class="fa-solid fa-fire"></i>
+                        </div>
+                        <h3 class="text-sm text-gray-400 uppercase tracking-wider font-bold mb-4" data-i18n="knowing">Main Stack</h3>
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            <span class="glass-card px-3 py-1.5 rounded-lg border text-sm flex items-center gap-2">
+                                <i class="fa-brands fa-python text-yellow-300"></i> Python
+                            </span>
+                            <span class="glass-card px-3 py-1.5 rounded-lg border text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-cube text-orange-400"></i> BukkitAPI
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl tilt-element h-full flex flex-col">
+                        <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4 text-blue-400 text-xl">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="text-sm text-gray-400 uppercase tracking-wider font-bold mb-4" data-i18n="learning">Currently Learning</h3>
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            <span class="glass-card px-3 py-1.5 rounded-lg border text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-c text-blue-400"></i> C++
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl tilt-element h-full flex flex-col">
+                        <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4 text-purple-400 text-xl">
+                            <i class="fa-solid fa-rocket"></i>
+                        </div>
+                        <h3 class="text-sm text-gray-400 uppercase tracking-wider font-bold mb-4" data-i18n="planning">Planned</h3>
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            <span class="glass-card px-3 py-1.5 rounded-lg border text-sm flex items-center gap-2 opacity-80">
+                                <i class="fa-brands fa-rust text-orange-600"></i> Rust
+                            </span>
+                            <span class="glass-card px-3 py-1.5 rounded-lg border text-sm flex items-center gap-2 opacity-80">
+                                <i class="fa-brands fa-golang text-cyan-400"></i> Go
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="page-projects" class="w-full hidden page-enter">
+                <h2 class="text-3xl font-bold mb-8 flex items-center gap-3 justify-center">
+                    <i class="fa-solid fa-server text-green-400"></i> <span data-i18n="projects_title">Minecraft Projects</span>
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 rounded-2xl relative overflow-hidden group tilt-element">
+                        <div class="absolute top-0 right-0 p-4">
+                            <span class="relative flex h-3 w-3 justify-center items-center">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                            </span>
+                        </div>
+                        <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4 text-green-400 text-xl">
+                            <i class="fa-solid fa-gamepad"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-1">UiverseSky</h3>
+                        <p class="text-green-400 text-xs font-bold uppercase tracking-widest mb-6" data-i18n="status_active">Active</p>
+                        
+                        <div class="bg-black/40 p-3 rounded-lg flex items-center justify-between border border-white/10 cursor-pointer hover:bg-white/10 transition group-hover:border-white/20" onclick="copyIp('mc.uiversesky.pro')">
+                            <code class="text-sm text-gray-300 font-code select-all">mc.uiversesky.pro</code>
+                            <i class="fa-regular fa-copy text-gray-500 group-hover:text-white transition-colors"></i>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl relative overflow-hidden tilt-element">
+                        <div class="absolute top-0 right-0 p-4">
+                             <span class="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
+                        </div>
+                        <div class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center mb-4 text-yellow-400 text-xl">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-1">SpaceSky</h3>
+                        <p class="text-yellow-400 text-xs font-bold uppercase tracking-widest mb-6" data-i18n="status_dev">In Development</p>
+                        <div class="bg-black/40 p-3 rounded-lg flex items-center justify-between border border-white/5 opacity-50 cursor-not-allowed">
+                            <code class="text-sm text-gray-500 font-code">Coming Soon...</code>
+                            <i class="fa-solid fa-lock text-gray-600"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="page-contact" class="w-full hidden page-enter">
+                <h2 class="text-3xl font-bold mb-8 flex items-center gap-3 justify-center">
+                    <i class="fa-solid fa-link text-purple-400"></i> <span data-i18n="contact_title">Contacts</span>
+                </h2>
+                
+                <div class="flex flex-col gap-4 max-w-lg mx-auto w-full">
+                    <a href="https://github.com/Winzerx" target="_blank" class="glass-card p-5 rounded-2xl flex items-center gap-4 hover:bg-white hover:text-black group transition-all tilt-element">
+                        <div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-black/10 group-hover:text-black">
+                            <i class="fa-brands fa-github text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="text-xs opacity-60 font-bold uppercase">GitHub</div>
+                            <div class="font-bold text-lg">Winzerx</div>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square opacity-50 group-hover:opacity-100"></i>
+                    </a>
+
+                    <div class="glass-card p-5 rounded-2xl flex items-center gap-4 cursor-pointer hover:bg-[#5865F2] hover:text-white group transition-all tilt-element relative" onclick="copyText('Winzerxer')">
+                        <div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-white/20">
+                            <i class="fa-brands fa-discord text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="text-xs opacity-60 font-bold uppercase">Discord</div>
+                            <div class="font-bold text-lg">Winzerxer</div>
+                        </div>
+                        <i class="fa-regular fa-copy opacity-50 group-hover:opacity-100"></i>
+                        
+                        <span class="absolute -top-2 right-4 text-[10px] bg-white text-black px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">Click to copy</span>
+                    </div>
+                </div>
+                
+                <footer class="mt-16 text-center text-theme-secondary text-xs font-code opacity-50">
+                    &copy; 2025 Winzerx. <span data-i18n="footer">All rights reserved.</span>
+                </footer>
+            </section>
+
+        </div>
+    </div>
+
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+        <nav class="glass-nav px-2 py-2 rounded-full flex items-center gap-1 sm:gap-2">
+            <button onclick="navigateTo('home')" class="nav-item active w-12 h-12 sm:w-14 sm:h-14 rounded-full flex flex-col items-center justify-center text-xl hover:bg-white/10" data-target="home">
+                <i class="fa-solid fa-house"></i>
             </button>
-        </section>
-        <footer class="text-center text-gray-600 text-sm pb-8">
-            <p>&copy; 2025 Winzerx. Crafted with Winzerx.</p>
-        </footer>
+            <button onclick="navigateTo('skills')" class="nav-item w-12 h-12 sm:w-14 sm:h-14 rounded-full flex flex-col items-center justify-center text-xl hover:bg-white/10" data-target="skills">
+                <i class="fa-solid fa-code"></i>
+            </button>
+            <button onclick="navigateTo('projects')" class="nav-item w-12 h-12 sm:w-14 sm:h-14 rounded-full flex flex-col items-center justify-center text-xl hover:bg-white/10" data-target="projects">
+                <i class="fa-solid fa-server"></i>
+            </button>
+            <button onclick="navigateTo('contact')" class="nav-item w-12 h-12 sm:w-14 sm:h-14 rounded-full flex flex-col items-center justify-center text-xl hover:bg-white/10" data-target="contact">
+                <i class="fa-solid fa-address-card"></i>
+            </button>
+        </nav>
     </div>
-    <div id="notification" class="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 border-4 border-black transform translate-y-24 transition-transform duration-300 shadow-xl z-50 font-bold">
-        COPIED TO CLIPBOARD!
+
+    <div id="toast" class="fixed top-10 left-1/2 transform -translate-x-1/2 bg-white text-black px-6 py-3 rounded-full font-bold shadow-2xl -translate-y-32 transition-transform duration-300 z-[60] flex items-center gap-2 border border-gray-200">
+        <i class="fa-solid fa-check-circle text-green-600"></i>
+        <span id="toastMsg">Copied!</span>
     </div>
+
     <script>
-        function copyToClipboard(text, btnId) {
-            navigator.clipboard.writeText(text).then(() => {
-                showNotification();
-                
-                const btn = document.getElementById(btnId);
-                const originalText = btn.innerText;
-                
-                if(btnId === 'btn-copy-ip') {
-                    btn.innerText = 'OK!';
-                    setTimeout(() => {
-                        btn.innerText = 'COPY';
-                    }, 2000);
+        const translations = {
+            ru: {
+                role: "< Кодер />",
+                status: "С Наступающим 2026!",
+                nav_projects: "Проекты",
+                contact_btn: "Связаться",
+                skills_title: "Навыки и Стек",
+                knowing: "Основной стек",
+                learning: "Изучаю",
+                planning: "В планах",
+                projects_title: "Minecraft Проекты",
+                status_active: "Активен",
+                status_dev: "В разработке",
+                contact_title: "Связь",
+                footer: "Все права защищены."
+            },
+            en: {
+                role: "< Coder />",
+                status: "Happy Upcoming 2026!",
+                nav_projects: "Projects",
+                contact_btn: "Contact Me",
+                skills_title: "Skills & Stack",
+                knowing: "Main Stack",
+                learning: "Learning",
+                planning: "Planned",
+                projects_title: "Minecraft Projects",
+                status_active: "Active",
+                status_dev: "In Development",
+                contact_title: "Contacts",
+                footer: "All rights reserved."
+            }
+        };
+
+        let currentLang = 'ru';
+        let isDark = true;
+
+        function navigateTo(pageId) {
+            document.querySelectorAll('section[id^="page-"]').forEach(el => {
+                el.classList.add('hidden');
+            });
+
+            const target = document.getElementById('page-' + pageId);
+            target.classList.remove('hidden');
+            
+            target.classList.remove('page-enter');
+            void target.offsetWidth; 
+            target.classList.add('page-enter');
+
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.dataset.target === pageId) {
+                    btn.classList.add('active');
                 }
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
             });
         }
-        function showNotification() {
-            const notif = document.getElementById('notification');
-            notif.classList.remove('translate-y-24');
+
+        const langToggle = document.getElementById('langToggle');
+        const langLabel = document.getElementById('langLabel');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        
+        function updateLanguage(lang) {
+            currentLang = lang;
+            langLabel.textContent = lang === 'ru' ? 'EN' : 'RU';
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    if (el.classList.contains('typewriter')) {
+                        el.classList.remove('typewriter');
+                        el.innerHTML = translations[lang][key];
+                        void el.offsetWidth;
+                        el.classList.add('typewriter');
+                    } else {
+                        el.innerHTML = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        langToggle.addEventListener('click', () => {
+            updateLanguage(currentLang === 'ru' ? 'en' : 'ru');
+        });
+
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            document.body.classList.toggle('light-mode');
+            
+            if (isDark) {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            } else {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+            
+            drawSnow();
+        });
+
+        updateLanguage('ru');
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            toastMsg.textContent = msg;
+            toast.classList.remove('-translate-y-32');
+            toast.classList.add('translate-y-0');
+            
             setTimeout(() => {
-                notif.classList.add('translate-y-24');
+                toast.classList.remove('translate-y-0');
+                toast.classList.add('-translate-y-32');
             }, 2000);
         }
-        document.addEventListener('DOMContentLoaded', () => {
-            const elements = document.querySelectorAll('.animate-in');
-            elements.forEach((el, index) => {
-                el.style.animationDelay = `${index * 0.2}s`;
+
+        function copyIp(ip) {
+            navigator.clipboard.writeText(ip).then(() => {
+                showToast(currentLang === 'ru' ? 'IP скопирован!' : 'IP Copied!');
+            });
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(currentLang === 'ru' ? 'Ник скопирован!' : 'Username Copied!');
+            });
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            document.querySelectorAll('.tilt-element').forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+                     const centerX = rect.width / 2;
+                     const centerY = rect.height / 2;
+                     const rotateX = ((y - centerY) / centerY) * -5; 
+                     const rotateY = ((x - centerX) / centerX) * 5;
+
+                     card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                } else {
+                     card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                }
             });
         });
+        
+        document.addEventListener('mouseout', (e) => {
+             if(!e.target.closest('.tilt-element')) {
+                 document.querySelectorAll('.tilt-element').forEach(card => {
+                     card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                 });
+             }
+        });
+
+        const canvas = document.getElementById('snowCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let snowflakes = [];
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+
+        function createSnowflakes() {
+            const count = width < 768 ? 25 : 50;
+            snowflakes = [];
+            for (let i = 0; i < count; i++) {
+                snowflakes.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    r: Math.random() * 12 + 10, 
+                    d: Math.random() * count,
+                    opacity: Math.random() * 0.4 + 0.1,
+                    rotation: Math.random() * 360,
+                    rotationSpeed: (Math.random() - 0.5) * 0.02
+                });
+            }
+        }
+
+        function drawSnow() {
+            ctx.clearRect(0, 0, width, height);
+            
+            ctx.fillStyle = isDark ? "rgba(255, 255, 255, 0.8)" : "rgba(56, 189, 248, 0.8)";
+
+            for (let i = 0; i < snowflakes.length; i++) {
+                let p = snowflakes[i];
+                ctx.save();
+                ctx.globalAlpha = p.opacity;
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rotation);
+                ctx.font = `${p.r}px sans-serif`;
+                ctx.fillText("❄", 0, 0);
+                ctx.restore();
+            }
+            moveSnow();
+        }
+
+        function moveSnow() {
+            for (let i = 0; i < snowflakes.length; i++) {
+                let p = snowflakes[i];
+                p.y += Math.pow(p.d, 0.3) * 0.1 + 0.5;
+                p.x += Math.sin(p.y * 0.02) * 0.3;
+                p.rotation += p.rotationSpeed;
+
+                if (p.y > height) {
+                    snowflakes[i] = { 
+                        x: Math.random() * width, 
+                        y: -20, 
+                        r: p.r, 
+                        d: p.d, 
+                        opacity: p.opacity, 
+                        rotation: Math.random() * 360, 
+                        rotationSpeed: p.rotationSpeed 
+                    };
+                }
+                if (p.x > width) snowflakes[i].x = 0;
+                if (p.x < -20) snowflakes[i].x = width;
+            }
+        }
+
+        function loop() {
+            drawSnow();
+            requestAnimationFrame(loop);
+        }
+
+        window.addEventListener('resize', () => {
+            resize();
+            createSnowflakes();
+        });
+
+        resize();
+        createSnowflakes();
+        loop();
+
     </script>
 </body>
 </html>
