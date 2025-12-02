@@ -228,8 +228,12 @@
         </button>
     </div>
 
-    <div class="absolute top-6 left-6 z-50">
-        <div id="musicPlayer" class="music-widget p-4 rounded-2xl flex flex-col gap-3 transition-all duration-300 hover:shadow-2xl w-64 cursor-default">
+    <div class="fixed top-4 left-4 z-50 flex flex-col items-start gap-3">
+        <button id="mobileMusicToggle" class="md:hidden glass-card w-10 h-10 rounded-full flex items-center justify-center text-white shadow-lg active:scale-95 transition-transform z-50">
+            <i class="fa-solid fa-music"></i>
+        </button>
+
+        <div id="musicPlayer" class="music-widget p-4 rounded-2xl flex flex-col gap-3 transition-all duration-300 hover:shadow-2xl w-64 cursor-default transform origin-top-left scale-0 opacity-0 absolute top-12 left-0 md:static md:scale-100 md:opacity-100 md:block pointer-events-none md:pointer-events-auto">
             <div class="flex items-center gap-3">
                 <div class="relative w-12 h-12 flex-shrink-0">
                     <div class="w-12 h-12 rounded-full bg-black/50 flex items-center justify-center disc overflow-hidden shadow-md border border-white/10">
@@ -240,7 +244,7 @@
                         <i class="fa-solid fa-play text-white text-sm"></i>
                     </div>
                 </div>
-                <div class="flex flex-col overflow-hidden">
+                <div class="flex flex-col overflow-hidden w-full">
                     <span class="text-xs font-bold truncate text-white">Случайно Наступил На Шприц</span>
                     <span class="text-[10px] text-gray-400 truncate">VILLIAN</span>
                 </div>
@@ -254,9 +258,14 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-2">
-                <i class="fa-solid fa-volume-low text-xs text-gray-400"></i>
-                <input type="range" id="volumeBar" min="0" max="1" step="0.1" value="0.5" class="w-full h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-white">
+            <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2 flex-1">
+                    <i class="fa-solid fa-volume-low text-xs text-gray-400"></i>
+                    <input type="range" id="volumeBar" min="0" max="1" step="0.1" value="0.5" class="w-full h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-white">
+                </div>
+                <button id="repeatBtn" class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors text-green-400" title="Repeat">
+                    <i class="fa-solid fa-repeat text-xs"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -778,6 +787,33 @@
 
         volumeBar.addEventListener('input', (e) => {
             audio.volume = e.target.value;
+        });
+
+        const mobileToggle = document.getElementById('mobileMusicToggle');
+        const musicPlayerCard = document.getElementById('musicPlayer');
+        let isPlayerOpen = false;
+
+        mobileToggle.addEventListener('click', () => {
+            isPlayerOpen = !isPlayerOpen;
+            if (isPlayerOpen) {
+                musicPlayerCard.classList.remove('scale-0', 'opacity-0', 'pointer-events-none');
+                mobileToggle.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+            } else {
+                musicPlayerCard.classList.add('scale-0', 'opacity-0', 'pointer-events-none');
+                mobileToggle.innerHTML = '<i class="fa-solid fa-music"></i>';
+            }
+        });
+
+        const repeatBtn = document.getElementById('repeatBtn');
+        repeatBtn.addEventListener('click', () => {
+            audio.loop = !audio.loop;
+            if (audio.loop) {
+                repeatBtn.classList.add('text-green-400');
+                repeatBtn.classList.remove('text-gray-400');
+            } else {
+                repeatBtn.classList.remove('text-green-400');
+                repeatBtn.classList.add('text-gray-400');
+            }
         });
 
         fetch('https://api.mcsrvstat.us/2/mc.uiversesky.pro')
